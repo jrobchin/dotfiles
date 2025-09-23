@@ -15,3 +15,6 @@ alias ckitty="cd ~/.config/kitty && nvim . && cd -"
 # SHELL INTEGRATIONS
 source <(fzf --zsh)
 eval "$(zoxide init --cmd cd zsh)"
+
+# Fix for ALT-C for fzf
+bindkey "ç" fzf-cd-widget
