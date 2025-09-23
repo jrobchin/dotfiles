@@ -1,0 +1,10 @@
+{
+  "svx hightlight": {
+    "prefix": "hl",
+    "body": ["<Hl>$0</Hl>"]
+  },
+  "svx tooltip": {
+    "prefix": "tt",
+    "body": ["<Tt>$0</Tt>"]
+  }
+}

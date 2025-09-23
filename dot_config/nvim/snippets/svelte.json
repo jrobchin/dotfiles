@@ -1,0 +1,14 @@
+{
+  "script": {
+    "prefix": "script",
+    "body": ["<script lang=\"ts\">", "\t$0", "</script>"]
+  },
+  "style": {
+    "prefix": "style",
+    "body": ["<style lang=\"scss\">", "\t$0", "</style>"]
+  },
+  "children": {
+    "prefix": "children",
+    "body": ["let { children }: { children: Snippet } = \\$props();"]
+  }
+}
