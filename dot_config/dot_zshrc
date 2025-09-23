@@ -1,0 +1,17 @@
+export PROMPT="%~ $ "
+export RPROMPT="%t"
+
+export EDITOR="nvim"
+
+# ALIASES
+alias v="nvim ."
+
+alias sz="source ~/.zshrc"
+
+alias czsh="cd && nvim ~/.zshrc && cd -"
+alias cnvim="cd ~/.config/nvim && nvim . && cd -"
+alias ckitty="cd ~/.config/kitty && nvim . && cd -"
+
+# SHELL INTEGRATIONS
+source <(fzf --zsh)
+eval "$(zoxide init --cmd cd zsh)"
