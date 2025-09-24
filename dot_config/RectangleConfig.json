@@ -242,7 +242,7 @@
   "shortcuts" : {
     "center" : {
       "keyCode" : 125,
-      "modifierFlags" : 655360
+      "modifierFlags" : 1310720
     },
     "larger" : {
       "keyCode" : 24,
@@ -250,11 +250,11 @@
     },
     "leftHalf" : {
       "keyCode" : 123,
-      "modifierFlags" : 655360
+      "modifierFlags" : 1310720
     },
     "maximize" : {
       "keyCode" : 126,
-      "modifierFlags" : 655360
+      "modifierFlags" : 1310720
     },
     "nextDisplay" : {
       "keyCode" : 123,
@@ -274,7 +274,7 @@
     },
     "rightHalf" : {
       "keyCode" : 124,
-      "modifierFlags" : 655360
+      "modifierFlags" : 1310720
     },
     "smaller" : {
       "keyCode" : 27,
