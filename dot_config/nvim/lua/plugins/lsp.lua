@@ -201,6 +201,7 @@ return {
 				vtsls = {},
 				svelte = {},
 				somesass_ls = {},
+				jdtls = {},
 			}
 
 			-- Ensure the servers and tools above are installed
