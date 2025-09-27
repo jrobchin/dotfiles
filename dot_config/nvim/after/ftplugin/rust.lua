@@ -10,7 +10,7 @@ wk.add({
 			function()
 				vim.cmd.RustLsp("codeAction")
 			end,
-			desc = "Code [A]ctions",
+			desc = "LSP: Code [A]ctions",
 			mode = "n",
 			buffer = bufnr,
 			silent = true,
@@ -20,7 +20,7 @@ wk.add({
 			function()
 				vim.cmd.RustLsp("runnables")
 			end,
-			desc = "[R]unnables",
+			desc = "LSP: [R]unnables",
 			mode = "n",
 			buffer = bufnr,
 			silent = true,
@@ -30,7 +30,7 @@ wk.add({
 			function()
 				vim.cmd.RustLsp({ "hover", "actions" })
 			end,
-			desc = "Hover Actions",
+			desc = "LSP: Hover Actions",
 			mode = "n",
 			buffer = bufnr,
 			silent = true,
