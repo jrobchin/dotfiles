@@ -18,3 +18,52 @@ eval "$(zoxide init --cmd cd zsh)"
 
 # Fix for ALT-C for fzf
 bindkey "ç" fzf-cd-widget
+
+# Lazy load nvm
+_nvm_init_done=false
+
+nvm() {
+    if [[ "$_nvm_init_done" == "false" ]]; then
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+        _nvm_init_done=true
+        unfunction nvm
+    fi
+    nvm "$@"
+}
+
+# Lazy load node/npm/npx commands to trigger nvm
+node() {
+    if [[ "$_nvm_init_done" == "false" ]]; then
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+        _nvm_init_done=true
+        unfunction node npm npx
+    fi
+    node "$@"
+}
+
+npm() {
+    if [[ "$_nvm_init_done" == "false" ]]; then
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+        _nvm_init_done=true
+        unfunction node npm npx
+    fi
+    npm "$@"
+}
+
+npx() {
+    if [[ "$_nvm_init_done" == "false" ]]; then
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+        _nvm_init_done=true
+        unfunction node npm npx
+    fi
+    npx "$@"
+}
+
