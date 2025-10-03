@@ -35,5 +35,15 @@ wk.add({
 			buffer = bufnr,
 			silent = true,
 		},
+		{
+			"gro",
+			function()
+				vim.cmd.RustLsp("openDocs")
+			end,
+			desc = "LSP: [O]pen Docs",
+			mode = "n",
+			buffer = bufnr,
+			silent = true,
+		},
 	},
 })
