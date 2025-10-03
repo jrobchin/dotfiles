@@ -26,6 +26,13 @@ return {
 			desc = "Debug: Start/Continue",
 		},
 		{
+			"<leader>dq",
+			function()
+				require("dapui").close()
+			end,
+			desc = "Debug: Close UI",
+		},
+		{
 			"<leader>di",
 			function()
 				require("dap").step_into()

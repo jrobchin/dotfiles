@@ -28,6 +28,8 @@ return {
 				"javascript",
 				"scss",
 				"css",
+				"bash",
+				"java",
 			},
 			ignore_install = {},
 			modules = {},

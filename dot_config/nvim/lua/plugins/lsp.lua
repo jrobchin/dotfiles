@@ -201,6 +201,7 @@ return {
 				vtsls = {},
 				svelte = {},
 				somesass_ls = {},
+				kotlin_language_server = {},
 			}
 
 			-- Ensure the servers and tools above are installed
@@ -223,6 +224,7 @@ return {
 				"prettierd",
 				"isort",
 				"black",
+				"kotlin-debug-adapter",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
