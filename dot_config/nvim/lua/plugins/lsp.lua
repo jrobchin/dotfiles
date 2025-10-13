@@ -194,7 +194,6 @@ return {
 				},
 				marksman = {},
 				eslint = {},
-				bashls = {},
 				gopls = {},
 				pyright = {},
 				emmet_ls = {},

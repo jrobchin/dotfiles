@@ -13,6 +13,7 @@ return {
 				markdown = { "prettierd", "prettier", stop_after_first = true },
 				json = { "prettierd", "prettier", stop_after_first = true },
 				scss = { "prettierd", "prettier", stop_after_first = true },
+				kotlin = { "ktlint" },
 			},
 			format_after_save = function(bufnr)
 				local filename = vim.api.nvim_buf_get_name(bufnr)
