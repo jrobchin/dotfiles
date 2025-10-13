@@ -2,6 +2,9 @@
 --------------------------------------------------------------------------------
 local opt = vim.opt
 
+-- Disable mouse support
+opt.mouse = ""
+
 -- Confirm before exiting a modified buffer
 opt.confirm = true
 
