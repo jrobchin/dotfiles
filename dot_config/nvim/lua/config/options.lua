@@ -86,3 +86,6 @@ vim.filetype.add({
 
 -- cfilter
 vim.cmd.packadd("cfilter")
+
+-- local vim config
+vim.opt.exrc = true

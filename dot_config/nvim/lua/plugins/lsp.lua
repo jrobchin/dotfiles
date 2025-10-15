@@ -193,14 +193,73 @@ return {
 					},
 				},
 				marksman = {},
-				eslint = {},
+				eslint = {
+					settings = {
+						workingDirectory = { mode = "auto" },
+					},
+				},
 				gopls = {},
 				pyright = {},
-				emmet_ls = {},
-				vtsls = {},
+				emmet_ls = {
+					filetypes = {
+						"html",
+						"typescriptreact",
+						"javascriptreact",
+						"css",
+						"sass",
+						"scss",
+						"less",
+						"svelte",
+					},
+				},
+				vtsls = {
+					settings = {
+						typescript = {
+							preferences = {
+								importModuleSpecifier = "relative",
+								includePackageJsonAutoImports = "on",
+							},
+							suggest = {
+								completeFunctionCalls = true,
+							},
+						},
+						javascript = {
+							preferences = {
+								importModuleSpecifier = "relative",
+								includePackageJsonAutoImports = "on",
+							},
+							suggest = {
+								completeFunctionCalls = true,
+							},
+						},
+					},
+				},
 				svelte = {},
 				somesass_ls = {},
 				kotlin_language_server = {},
+				tailwindcss = {
+					filetypes = {
+						"html",
+						"typescriptreact",
+						"javascriptreact",
+						"css",
+						"sass",
+						"scss",
+						"svelte",
+					},
+					settings = {
+						tailwindCSS = {
+							experimental = {
+								classRegex = {
+									{ "clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+									{ "cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+									{ "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+								},
+							},
+						},
+					},
+				},
+				-- Note: metals (Scala LSP) is handled by nvim-metals plugin separately
 			}
 
 			-- Ensure the servers and tools above are installed
@@ -224,6 +283,7 @@ return {
 				"isort",
 				"black",
 				"kotlin-debug-adapter",
+				"tailwindcss-language-server",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 

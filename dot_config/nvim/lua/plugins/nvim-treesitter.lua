@@ -30,6 +30,8 @@ return {
 				"css",
 				"bash",
 				"java",
+				"scala",
+				"jsdoc",
 			},
 			ignore_install = {},
 			modules = {},

@@ -2787,8 +2787,82 @@
 
 #: }}}
 
+# BEGIN_CUSTOM_SETTINGS
+#: Disable bell
+enable_audio_bell no
+
+#: Enable layouts
+enabled_layouts tall:bias=70;full_size=1;mirrored=false,fat:bias=50;full_size=1;mirrored=false,stack
+
+#: Next layout
+map kitty_mod+c next_layout
+
+#: Toggle stack
+map kitty_mod+k toggle_layout tall
+
+#: Toggle stack
+map kitty_mod+l toggle_layout stack
+
+#: Toggle stack
+map kitty_mod+; toggle_layout fat
+
+#: Visually select window
+map alt+w focus_visible_window
+
+#: Visually swap window
+map alt+shift+w swap_with_window
+
+#: Change option to alt
+macos_option_as_alt left
+
+#: Allow remote control
+allow_remote_control yes
+
+#: Login & interactive shell
+# shell /bin/zsh --login --interactive
+
+#: Close the window on child death to prevent stuck windows
+close_on_child_death no
+# END_CUSTOM_SETTINGS
+
+# SETUP kitty-scrollback.nvim
+allow_remote_control yes
+listen_on unix:/tmp/kitty
+shell_integration enabled
+
+# kitty-scrollback.nvim Kitten alias
+# action_alias kitty_scrollback_nvim kitten /Users/jason.chin/.local/share/nvim/lazy/kitty-scrollback.nvim/python/kitty_scrollback_nvim.py --nvim-args -n
+# To get a clean nvim instance use the below alias instead
+action_alias kitty_scrollback_nvim kitten ~/.local/share/nvim/lazy/kitty-scrollback.nvim/python/kitty_scrollback_nvim.py --nvim-args -n --clean --noplugins
+
+#: Browse scrollback buffer in nvim
+map kitty_mod+h kitty_scrollback_nvim
+
+#: Browse output of the last shell command in nvim
+map kitty_mod+g kitty_scrollback_nvim --config ksb_builtin_last_cmd_output
+
+#: Show clicked command output in nvim
+mouse_map ctrl+shift+right press ungrabbed combine : mouse_select_command_output : kitty_scrollback_nvim --config ksb_builtin_last_visited_cmd_output
+# END_SETUP kitty-scrollback.nvim
+
+# BEGIN_CUSTOM_SHORTCUTS
+#: Go back to the last window
+map kitty_mod+o nth_window -1
+
+#: Open new window in the current directory
+map kitty_mod+enter launch --cwd=current
+map kitty_mod+t new_tab_with_cwd
+# END_CUSTOM_SHORTCUTS
 
 # BEGIN_KITTY_THEME
-# Kanagawa_dragon
+# vague kitty
 include current-theme.conf
 # END_KITTY_THEME
+
+
+# BEGIN_KITTY_FONTS
+font_family      family="PT Mono"
+bold_font        auto
+italic_font      auto
+bold_italic_font auto
+# END_KITTY_FONTS
