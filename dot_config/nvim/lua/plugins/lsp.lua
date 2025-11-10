@@ -310,7 +310,7 @@ return {
 				filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
 			})
 
-			vim.lsp.enable("vtsls")
+			vim.lsp.enable("gdscript")
 		end,
 	},
 	{
