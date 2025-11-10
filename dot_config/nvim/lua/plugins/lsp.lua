@@ -200,6 +200,7 @@ return {
 				},
 				gopls = {},
 				pyright = {},
+				-- basedpyright = {},
 				emmet_ls = {
 					filetypes = {
 						"html",

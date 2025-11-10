@@ -2,17 +2,21 @@ return {
 	{
 		"iamcco/markdown-preview.nvim",
 		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-		build = "cd app && yarn install",
+		build = "cd app && npm install",
 		init = function()
 			vim.g.mkdp_filetypes = { "md", "markdown" }
 		end,
 		ft = { "markdown" },
+		keys = {
+			{ "<leader>mp", "<cmd>MarkdownPreview<cr>", desc = "Markdown Preview" },
+		},
 	},
 	{
 		"OXY2DEV/markview.nvim",
 		event = "VeryLazy",
 		priority = 49, -- load before nvim-treesitter
 		lazy = false,
+		ft = { "markdown" },
 		opts = {
 			preview = {
 				enable = false,
@@ -35,7 +39,7 @@ return {
 			},
 		},
 		keys = {
-			{ "<leader>m", "<cmd>Markview<cr>", desc = "Toggle Markview" },
+			{ "<leader>mv", "<cmd>Markview<cr>", desc = "Toggle Markview" },
 		},
 	},
 }

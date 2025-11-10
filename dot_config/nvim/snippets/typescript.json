@@ -1,1 +1,140 @@
-{}
+{
+  "React Functional Component": {
+    "prefix": "rfc",
+    "body": [
+      "import React from 'react';",
+      "",
+      "interface ${1:ComponentName}Props {",
+      "  ${2:// Add props here}",
+      "}",
+      "",
+      "export const ${1:ComponentName}: React.FC<${1:ComponentName}Props> = ({$3}) => {",
+      "  return (",
+      "    <div>",
+      "      ${4:${1:ComponentName}}",
+      "    </div>",
+      "  );",
+      "};"
+    ],
+    "description": "React Functional Component with TypeScript"
+  },
+  "React Functional Component with default export": {
+    "prefix": "rfcd",
+    "body": [
+      "import React from 'react';",
+      "",
+      "interface ${1:ComponentName}Props {",
+      "  ${2:// Add props here}",
+      "}",
+      "",
+      "const ${1:ComponentName}: React.FC<${1:ComponentName}Props> = ({$3}) => {",
+      "  return (",
+      "    <div>",
+      "      ${4:${1:ComponentName}}",
+      "    </div>",
+      "  );",
+      "};",
+      "",
+      "export default ${1:ComponentName};"
+    ],
+    "description": "React Functional Component with default export"
+  },
+  "React Hook": {
+    "prefix": "rhook",
+    "body": [
+      "import { useState, useEffect } from 'react';",
+      "",
+      "export const use${1:HookName} = (${2}) => {",
+      "  const [${3:state}, set${3/(.*)/${1:/capitalize}/}] = useState<${4:any}>(${5:initialValue});",
+      "",
+      "  useEffect(() => {",
+      "    ${6:// Effect logic here}",
+      "  }, [${7}]);",
+      "",
+      "  return { ${3:state} };",
+      "};"
+    ],
+    "description": "Custom React Hook with TypeScript"
+  },
+  "useState Hook": {
+    "prefix": "us",
+    "body": [
+      "const [${1:state}, set${1/(.*)/${1:/capitalize}/}] = useState<${2:type}>(${3:initialValue});"
+    ],
+    "description": "React useState Hook"
+  },
+  "useEffect Hook": {
+    "prefix": "ue",
+    "body": [
+      "useEffect(() => {",
+      "  ${1:// Effect logic}",
+      "  ",
+      "  return () => {",
+      "    ${2:// Cleanup}",
+      "  };",
+      "}, [${3}]);"
+    ],
+    "description": "React useEffect Hook"
+  },
+  "useContext Hook": {
+    "prefix": "uc",
+    "body": [
+      "const ${1:context} = useContext(${2:Context});"
+    ],
+    "description": "React useContext Hook"
+  },
+  "useReducer Hook": {
+    "prefix": "ur",
+    "body": [
+      "const [${1:state}, ${2:dispatch}] = useReducer(${3:reducer}, ${4:initialState});"
+    ],
+    "description": "React useReducer Hook"
+  },
+  "useMemo Hook": {
+    "prefix": "um",
+    "body": [
+      "const ${1:memoizedValue} = useMemo(() => {",
+      "  return ${2:computeExpensiveValue}(${3});",
+      "}, [${3}]);"
+    ],
+    "description": "React useMemo Hook"
+  },
+  "useCallback Hook": {
+    "prefix": "ucb",
+    "body": [
+      "const ${1:memoizedCallback} = useCallback(",
+      "  (${2}) => {",
+      "    ${3:// Callback logic}",
+      "  },",
+      "  [${4}]",
+      ");"
+    ],
+    "description": "React useCallback Hook"
+  },
+  "TypeScript Interface": {
+    "prefix": "tsi",
+    "body": [
+      "interface ${1:InterfaceName} {",
+      "  ${2:property}: ${3:type};",
+      "}"
+    ],
+    "description": "TypeScript Interface"
+  },
+  "TypeScript Type": {
+    "prefix": "tst",
+    "body": [
+      "type ${1:TypeName} = ${2:type};"
+    ],
+    "description": "TypeScript Type Alias"
+  },
+  "TypeScript Enum": {
+    "prefix": "tse",
+    "body": [
+      "enum ${1:EnumName} {",
+      "  ${2:Value1} = '${2:Value1}',",
+      "  ${3:Value2} = '${3:Value2}',",
+      "}"
+    ],
+    "description": "TypeScript Enum"
+  }
+}

@@ -13,7 +13,7 @@ opt.number = true
 opt.relativenumber = true
 
 -- Keep signcolumn on by default
-opt.signcolumn = "yes"
+opt.signcolumn = "yes:2"
 
 -- Cursorline
 opt.cursorline = true
@@ -89,3 +89,6 @@ vim.cmd.packadd("cfilter")
 
 -- local vim config
 vim.opt.exrc = true
+
+-- textwidth
+vim.opt.textwidth = 120

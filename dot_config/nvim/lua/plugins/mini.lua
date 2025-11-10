@@ -6,7 +6,6 @@ return {
 			require("mini.icons").setup()
 			require("mini.cursorword").setup()
 			require("mini.statusline").setup()
-			require("mini.animate").setup()
 
 			require("mini.indentscope").setup({
 				draw = {

@@ -22,10 +22,55 @@ return {
 			{ "<leader>/", "<cmd>FzfLua grep_curbuf<cr>", desc = "Fuzzy search buffer" },
 			{ "<leader>'", "<cmd>FzfLua grep_curbuf resume=true<cr>", desc = "Fuzzy search buffer" },
 		},
-		config = function()
-			require("fzf-lua").setup({
-				"hide",
-			})
-		end,
+			config = function()
+				local fzf_lua = require("fzf-lua")
+				local path = require("fzf-lua.path")
+				local utils = require("fzf-lua.utils")
+
+				local function diff_selected(entries, opts)
+					local selection = entries or {}
+					local resolved = {}
+
+					for _, entry in ipairs(selection) do
+						local file = path.entry_to_file(entry, opts)
+						local target = file.bufname and #file.bufname > 0 and file.bufname or file.path
+
+						if target and target ~= "<none>" then
+							table.insert(resolved, target)
+						end
+
+						if #resolved == 2 then
+							break
+						end
+					end
+
+					if #resolved < 2 then
+						utils.warn("Select two files to diff")
+						return
+					end
+
+					if #selection > 2 then
+						utils.info("Diffing first two selected entries")
+					end
+
+					vim.schedule(function()
+						local left = vim.fn.fnameescape(resolved[1])
+						local right = vim.fn.fnameescape(resolved[2])
+
+						vim.cmd(string.format("tabedit %s", left))
+						vim.cmd(string.format("vert diffsplit %s", right))
+					end)
+				end
+
+				fzf_lua.setup({
+					"hide",
+					actions = {
+						files = {
+							true,
+							["alt-d"] = diff_selected,
+						},
+					},
+				})
+			end,
 	},
 }

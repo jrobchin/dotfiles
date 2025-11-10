@@ -14,7 +14,9 @@ alias ckitty="cd ~/.config/kitty && nvim . && cd -"
 
 # SHELL INTEGRATIONS
 source <(fzf --zsh)
-eval "$(zoxide init --cmd cd zsh)"
+if [[ "$CLAUDECODE" != "1" ]]; then
+    eval "$(zoxide init --cmd cd zsh)"
+fi
 
 # Fix for ALT-C for fzf
 bindkey "ç" fzf-cd-widget
@@ -23,3 +25,4 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
+eval "$(/opt/homebrew/bin/brew shellenv)"

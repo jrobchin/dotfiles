@@ -62,7 +62,24 @@ return {
 	},
 	{
 		"catgoose/nvim-colorizer.lua",
+		enabled = false, -- Need to figure out how to enable for specific filetypes
 		event = "BufReadPre",
-		opts = {},
+		config = function()
+			require("colorizer").setup({
+				"css",
+			})
+		end,
+	},
+	{
+		"nvim-treesitter/nvim-treesitter-context",
+		opts = function()
+			require("treesitter-context").setup({
+				enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+			})
+		end,
+	},
+	{
+		"dimtion/guttermarks.nvim",
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
 	},
 }
