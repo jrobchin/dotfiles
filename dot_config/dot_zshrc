@@ -26,3 +26,22 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
+
+autoload -Uz vcs_info
+setopt prompt_subst
+
+precmd() { vcs_info }
+zstyle ':vcs_info:git*' formats '%F{yellow}(%b)%f'
+
+prompt_dir_with_slash() {
+  local dir
+  dir=$(print -P "%1~")
+  if [[ $dir == "/" ]]; then
+    printf "/"
+  else
+    printf "%s/" "${dir%/}"
+  fi
+}
+
+PROMPT='%F{cyan}$(prompt_dir_with_slash)%f${vcs_info_msg_0_:+ ${vcs_info_msg_0_}} %# '
+RPROMPT='%F{green}%t%f'
