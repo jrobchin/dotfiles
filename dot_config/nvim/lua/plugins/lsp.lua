@@ -198,7 +198,6 @@ return {
 						workingDirectory = { mode = "auto" },
 					},
 				},
-				gopls = {},
 				pyright = {},
 				-- basedpyright = {},
 				emmet_ls = {
@@ -283,6 +282,7 @@ return {
 				"prettierd",
 				"isort",
 				"black",
+				"gopls",
 				"kotlin-debug-adapter",
 				"tailwindcss-language-server",
 			})
