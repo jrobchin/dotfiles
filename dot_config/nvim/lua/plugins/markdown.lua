@@ -1,6 +1,7 @@
 return {
 	{
 		"iamcco/markdown-preview.nvim",
+		enabled = false,
 		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
 		build = "cd app && npm install",
 		init = function()
@@ -9,6 +10,20 @@ return {
 		ft = { "markdown" },
 		keys = {
 			{ "<leader>mp", "<cmd>MarkdownPreview<cr>", desc = "Markdown Preview" },
+		},
+	},
+	{
+		"brianhuster/live-preview.nvim",
+		cmd = { "LivePreview", "LivePreviewStop", "LivePreviewPick" },
+		dependencies = {
+			"ibhagwan/fzf-lua",
+		},
+		opts = {
+			dynamic_root = true,
+		},
+		keys = {
+			{ "<leader>mp", "<cmd>LivePreview start<cr>", desc = "Live Preview" },
+			{ "<leader>mP", "<cmd>LivePreview pick<cr>", desc = "Live Preview (Picker)" },
 		},
 	},
 	{

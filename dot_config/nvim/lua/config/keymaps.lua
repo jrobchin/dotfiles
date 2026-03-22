@@ -92,6 +92,10 @@ wk.add({
 		{ "<Down>", "gj", desc = "Navigate down (visual line)" },
 		{ "<Up>", "gk", desc = "Navigate up (visual line)" },
 		{ "<C-l>", "<cmd>set hlsearch!<cr><C-l>", desc = "Toggle search highlighting" },
+		{ "<C-k>", "5<C-y>", desc = "Scroll up" },
+		{ "<C-j>", "5<C-e>", desc = "Scroll down" },
+		{ "<C-u>", "10<C-y>", desc = "Scroll up" },
+		{ "<C-d>", "10<C-e>", desc = "Scroll down" },
 
 		-- Files
 		{ "<leader>ww", "<cmd>write<cr>", desc = "Write file" },

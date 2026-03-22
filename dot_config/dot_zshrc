@@ -1,6 +1,3 @@
-export PROMPT="%~ $ "
-export RPROMPT="%t"
-
 export EDITOR="nvim"
 
 # ALIASES
@@ -12,6 +9,45 @@ alias czsh="cd && nvim ~/.zshrc && cd -"
 alias cnvim="cd ~/.config/nvim && nvim . && cd -"
 alias ckitty="cd ~/.config/kitty && nvim . && cd -"
 
+alias gs="git status"
+alias ga="git add"
+alias gc="git commit -m"
+alias gC="git checkout"
+alias gp="git push"
+alias gP="git pull"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# --- Git + PR prompt setup ---
+autoload -Uz vcs_info
+setopt prompt_subst
+
+zstyle ':vcs_info:git*' formats '%F{yellow}(%b)%f'
+
+# Async PR info (clickable in Kitty/iTerm2)
+source ~/.config/zsh/git-pr.zsh
+
+precmd() {
+  vcs_info
+  _update_pr_cache
+}
+
+# Conda env indicator (conda's auto-modify is disabled via ~/.condarc)
+_conda_env_prompt() {
+  [[ -n "$CONDA_DEFAULT_ENV" ]] && printf '%%F{green}(%s)%%f ' "$CONDA_DEFAULT_ENV"
+}
+
+# Multi-line prompt:
+#   Line 1: conda env (green) + full path (cyan)
+#   Line 2: branch (yellow) + PR link (magenta, clickable)
+#   Line 3: prompt character
+PROMPT=$'\n''$(_conda_env_prompt)%F{cyan}%~%f${vcs_info_msg_0_:+'$'\n''${vcs_info_msg_0_}$(_git_pr_prompt)}'$'\n''%F{white}%#%f '
+RPROMPT='%F{green}%t%f'
+
 # SHELL INTEGRATIONS
 source <(fzf --zsh)
 if [[ "$CLAUDECODE" != "1" ]]; then
@@ -20,28 +56,3 @@ fi
 
 # Fix for ALT-C for fzf
 bindkey "ç" fzf-cd-widget
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
-autoload -Uz vcs_info
-setopt prompt_subst
-
-precmd() { vcs_info }
-zstyle ':vcs_info:git*' formats '%F{yellow}(%b)%f'
-
-prompt_dir_with_slash() {
-  local dir
-  dir=$(print -P "%1~")
-  if [[ $dir == "/" ]]; then
-    printf "/"
-  else
-    printf "%s/" "${dir%/}"
-  fi
-}
-
-PROMPT='%F{cyan}$(prompt_dir_with_slash)%f${vcs_info_msg_0_:+ ${vcs_info_msg_0_}} %# '
-RPROMPT='%F{green}%t%f'

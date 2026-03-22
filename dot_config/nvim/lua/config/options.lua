@@ -52,7 +52,7 @@ opt.undofile = true
 opt.winborder = "rounded"
 
 -- Allow scrolling past the end of the file
-opt.scrolloff = 8 -- This keeps cursor centered when possible
+opt.scrolloff = 30 -- This keeps cursor centered when possible
 opt.sidescrolloff = 8 -- Horizontal scrolling offset
 
 -- Global statusline
@@ -92,3 +92,12 @@ vim.opt.exrc = true
 
 -- textwidth
 vim.opt.textwidth = 120
+
+-- Auto-save
+opt.autowriteall = true
+vim.api.nvim_create_autocmd({ "InsertLeavePre", "TextChanged", "TextChangedP" }, {
+	pattern = "*",
+	callback = function()
+		vim.cmd("silent! write")
+	end,
+})
