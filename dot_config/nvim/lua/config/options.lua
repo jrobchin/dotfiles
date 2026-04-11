@@ -74,8 +74,8 @@ opt.foldtext = ""
 opt.foldmethod = "expr"
 opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 
--- Colors
-opt.termguicolors = true
+-- Treesitter parser install path
+vim.opt.rtp:append(vim.fn.stdpath("data") .. "/site")
 
 -- File types
 vim.filetype.add({
@@ -95,9 +95,11 @@ vim.opt.textwidth = 120
 
 -- Auto-save
 opt.autowriteall = true
-vim.api.nvim_create_autocmd({ "InsertLeavePre", "TextChanged", "TextChangedP" }, {
+vim.api.nvim_create_autocmd({ "InsertLeavePre", "TextChanged" }, {
 	pattern = "*",
 	callback = function()
-		vim.cmd("silent! write")
+		if vim.bo.modified and vim.bo.modifiable and vim.bo.buftype == "" then
+			vim.cmd("silent! write")
+		end
 	end,
 })

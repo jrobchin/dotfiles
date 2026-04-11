@@ -36,17 +36,16 @@ return {
 	{
 		"OXY2DEV/markview.nvim",
 		event = "VeryLazy",
-		priority = 49, -- load before nvim-treesitter
 		lazy = false,
 		ft = { "markdown" },
 		opts = {
 			preview = {
 				enable = false,
-				filetypes = { "md", "markdown", "codecompanion", "svx" },
+				filetypes = { "md", "markdown", "svx" },
 				ignore_buftypes = {},
 				condition = function(buffer)
 					local ft = vim.bo[buffer].filetype
-					return vim.list_contains({ "markdown", "md", "codecompanion", "svx" }, ft)
+					return vim.list_contains({ "markdown", "md", "svx" }, ft)
 				end,
 			},
 			markdown = {

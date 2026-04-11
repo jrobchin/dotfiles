@@ -8,13 +8,6 @@ return {
 			vim.cmd("colorscheme vague")
 		end,
 	},
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		main = "ibl",
-		---@module "ibl"
-		---@type ibl.config
-		opts = {},
-	},
 	{ "folke/todo-comments.nvim", opts = {} },
 	{
 		"hedyhli/outline.nvim",
@@ -41,19 +34,6 @@ return {
 		event = "InsertEnter",
 		opts = {},
 	},
-	-- lazy.nvim
-	{
-		"sontungexpt/url-open",
-		event = "VeryLazy",
-		cmd = "URLOpenUnderCursor",
-		config = function()
-			local status_ok, url_open = pcall(require, "url-open")
-			if not status_ok then
-				return
-			end
-			url_open.setup({})
-		end,
-	},
 	{
 		"tronikelis/ts-autotag.nvim",
 		opts = {},
@@ -61,22 +41,8 @@ return {
 		event = "VeryLazy",
 	},
 	{
-		"catgoose/nvim-colorizer.lua",
-		enabled = false, -- Need to figure out how to enable for specific filetypes
-		event = "BufReadPre",
-		config = function()
-			require("colorizer").setup({
-				"css",
-			})
-		end,
-	},
-	{
 		"nvim-treesitter/nvim-treesitter-context",
-		opts = function()
-			require("treesitter-context").setup({
-				enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-			})
-		end,
+		opts = { enable = true },
 	},
 	{
 		"dimtion/guttermarks.nvim",

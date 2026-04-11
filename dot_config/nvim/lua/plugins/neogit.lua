@@ -5,9 +5,9 @@ return {
     "sindrets/diffview.nvim",
     "ibhagwan/fzf-lua",
   },
-  opt = {
+  opts = {
     integrations = {
-      diffview = true
+      diffview = true,
     },
   },
   keys = {

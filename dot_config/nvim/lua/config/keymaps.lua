@@ -136,7 +136,7 @@ wk.add({
 					return vim.fn.expand("%:.")
 				end)
 			end,
-			desc = "Copy Relative Path",
+			desc = "Copy relative path:line",
 		},
 		{
 			"<leader>bL",
@@ -205,14 +205,6 @@ wk.add({
 		{ "<leader>ll", toggle_loclist, desc = "Toggle location list" },
 
 		-- Links
-		{ "gx", "<esc>:URLOpenUnderCursor<cr>", desc = "Open URL under cursor" },
-		{
-			"<Leader>k",
-			function()
-				require("lsp_signature").toggle_float_win()
-			end,
-			desc = "Show/hide signature help",
-		},
 
 		-- Folds
 		{ "za", "za", desc = "Toggle fold under cursor" },
