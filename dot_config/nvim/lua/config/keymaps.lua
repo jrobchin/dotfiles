@@ -214,8 +214,28 @@ wk.add({
 			desc = "Show/hide signature help",
 		},
 
+		-- Folds
+		{ "za", "za", desc = "Toggle fold under cursor" },
+		{ "zo", "zo", desc = "Open fold under cursor" },
+		{ "zc", "zc", desc = "Close fold under cursor" },
+		{ "zR", "zR", desc = "Open all folds" },
+		{ "zM", "zM", desc = "Close all folds" },
+
+		-- Marks/jumps
+		{ "g;", "g;", desc = "Jump to last edit location" },
+		{ "g,", "g,", desc = "Jump forward in change list" },
+		{ "''", "''", desc = "Jump back to last jump position" },
+		-- Case changing
+		{ "~", "~", desc = "Toggle case of character" },
+		{ "gU", "gU", desc = "Uppercase (follow with motion)" },
+		{ "gu", "gu", desc = "Lowercase (follow with motion)" },
+
 		-- Spelling
 		{ "<leader>sf", "1z=", desc = "Fix spelling with the first option" },
+		{ "<leader>sa", "zg", desc = "Add word to dictionary" },
+		{ "<leader>sr", "zw", desc = "Mark word as wrong" },
+		{ "<leader>su", "zug", desc = "Undo add to dictionary" },
+		{ "<leader>ss", "z=", desc = "Suggest spelling corrections" },
 
 		-- Formatting
 		{ "<leader>wp", "m`vapgq``", desc = "Wrap paragraph" },

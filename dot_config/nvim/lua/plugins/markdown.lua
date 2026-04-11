@@ -1,7 +1,28 @@
 return {
 	{
+		"HakonHarnes/img-clip.nvim",
+		event = "VeryLazy",
+		ft = { "markdown" },
+		opts = {
+			default = {
+				dir_path = "assets",
+				file_name = "%Y-%m-%d-%H-%M-%S",
+				use_absolute_path = false,
+				relative_to_current_file = true,
+				prompt_for_file_name = false,
+				embed_image_as_base64 = false,
+				drag_and_drop = {
+					enabled = true,
+					insert_mode = true,
+				},
+			},
+		},
+		keys = {
+			{ "<leader>pi", "<cmd>PasteImage<cr>", desc = "Paste image from clipboard" },
+		},
+	},
+	{
 		"iamcco/markdown-preview.nvim",
-		enabled = false,
 		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
 		build = "cd app && npm install",
 		init = function()
@@ -10,20 +31,6 @@ return {
 		ft = { "markdown" },
 		keys = {
 			{ "<leader>mp", "<cmd>MarkdownPreview<cr>", desc = "Markdown Preview" },
-		},
-	},
-	{
-		"brianhuster/live-preview.nvim",
-		cmd = { "LivePreview", "LivePreviewStop", "LivePreviewPick" },
-		dependencies = {
-			"ibhagwan/fzf-lua",
-		},
-		opts = {
-			dynamic_root = true,
-		},
-		keys = {
-			{ "<leader>mp", "<cmd>LivePreview start<cr>", desc = "Live Preview" },
-			{ "<leader>mP", "<cmd>LivePreview pick<cr>", desc = "Live Preview (Picker)" },
 		},
 	},
 	{
@@ -38,15 +45,8 @@ return {
 				filetypes = { "md", "markdown", "codecompanion", "svx" },
 				ignore_buftypes = {},
 				condition = function(buffer)
-					local ft, bt = vim.bo[buffer].ft, vim.bo[buffer].bt
-
-					if bt == "nofile" and ft == "codecompanion" then
-						return true
-					elseif bt == "nofile" then
-						return false
-					else
-						return true
-					end
+					local ft = vim.bo[buffer].filetype
+					return vim.list_contains({ "markdown", "md", "codecompanion", "svx" }, ft)
 				end,
 			},
 			markdown = {
