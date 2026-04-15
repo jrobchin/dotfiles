@@ -18,10 +18,17 @@ opt.signcolumn = "yes:2"
 -- Cursorline
 opt.cursorline = true
 
--- Spelling
+-- Spelling (enabled per-filetype for content files; treesitter @spell captures
+-- scope it to comments/strings/text content within those files)
 opt.spelllang = "en_us"
-opt.spell = true
+opt.spell = false
 opt.spelloptions = "camel"
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "markdown", "text", "gitcommit", "svelte", "html" },
+	callback = function()
+		vim.opt_local.spell = true
+	end,
+})
 
 -- Search
 opt.ignorecase = true

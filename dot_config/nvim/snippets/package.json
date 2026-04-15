@@ -7,7 +7,7 @@
         "path": "./all.json"
       },
       {
-        "language": "typescript",
+        "language": ["typescript", "typescriptreact"],
         "path": "./typescript.json"
       },
       {

@@ -82,6 +82,21 @@ return {
 			require("nvim-treesitter.install").install(missing, { summary = true })
 		end
 
+		-- Auto-start treesitter highlighting for all filetypes with an installed parser.
+		-- The main branch of nvim-treesitter only installs parsers/queries; it does not
+		-- auto-enable highlighting. Neovim 0.12 auto-starts for built-in ftplugins
+		-- (lua, vim, c, etc.) but not for plugin-provided filetypes like svelte.
+		vim.api.nvim_create_autocmd("FileType", {
+			callback = function(args)
+				local ft = vim.bo[args.buf].filetype
+				-- Markdown is stopped below for markview compatibility
+				if ft == "markdown" then
+					return
+				end
+				pcall(vim.treesitter.start, args.buf)
+			end,
+		})
+
 		-- Disable treesitter highlighting for markdown (markview compat)
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "markdown",

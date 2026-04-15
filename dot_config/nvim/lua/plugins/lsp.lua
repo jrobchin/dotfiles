@@ -3,23 +3,18 @@ return {
 		-- Main LSP Configuration
 		"neovim/nvim-lspconfig",
 		dependencies = {
-			-- Automatically install LSPs and related tools to stdpath for Neovim
-			-- Mason must be loaded before its dependents so we need to set it up here.
-			-- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
+			-- Mason must be loaded before its dependents
 			{ "mason-org/mason.nvim", opts = {} },
 			"mason-org/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 
-			-- Useful status updates for LSP.
+			-- Useful status updates for LSP
 			{ "j-hui/fidget.nvim", opts = {} },
 
 			{ "folke/which-key.nvim" },
 		},
 		config = function()
-			--  This function gets run when an LSP attaches to a particular buffer.
-			--    That is to say, every time a new file is opened that is associated with
-			--    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
-			--    function will be executed to configure the current buffer
+			-- This runs when an LSP attaches to a particular buffer
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
 				callback = function(event)
@@ -28,7 +23,7 @@ return {
 						vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 					end
 
-					-- fzf-lua overrides for built-in LSP navigation (intentionally replacing defaults)
+					-- fzf-lua overrides for built-in LSP navigation
 					map("grr", require("fzf-lua").lsp_references, "Goto references")
 					map("gri", require("fzf-lua").lsp_implementations, "Goto implementation")
 					map("grd", require("fzf-lua").lsp_definitions, "Goto definition")
@@ -86,7 +81,6 @@ return {
 			})
 
 			-- Diagnostic Config
-			-- See :help vim.diagnostic.Opts
 			vim.diagnostic.config({
 				severity_sort = true,
 				float = { border = "rounded", source = "if_many" },
@@ -105,111 +99,193 @@ return {
 				},
 			})
 
-			-- Broadcast blink.cmp capabilities to LSP servers
-			local original_capabilities = vim.lsp.protocol.make_client_capabilities()
-			local capabilities = require("blink.cmp").get_lsp_capabilities(original_capabilities)
+			-----------------------------------------------------------------
+			-- Server configurations (Neovim 0.12 native API)
+			--
+			-- vim.lsp.config() deep-merges with defaults from nvim-lspconfig's
+			-- lsp/*.lua files. mason-lspconfig's automatic_enable calls
+			-- vim.lsp.enable() for all Mason-installed servers.
+			--
+			-- This means:
+			--   - Servers with no custom config just work (defaults are fine)
+			--   - Only customize servers that need non-default settings
+			--   - No handlers, no timing issues, no indirection
+			-----------------------------------------------------------------
 
-			local servers = {
-				clangd = {},
-				lua_ls = {
-					settings = {
-						Lua = {
-							completion = {
-								callSnippet = "Replace",
-							},
-						},
+			-- Broadcast blink.cmp capabilities to ALL LSP servers
+			vim.lsp.config("*", {
+				capabilities = require("blink.cmp").get_lsp_capabilities(),
+			})
+
+			vim.lsp.config("lua_ls", {
+				settings = {
+					Lua = {
+						completion = { callSnippet = "Replace" },
 					},
 				},
-				marksman = {},
-				eslint = {
-					settings = {
-						workingDirectory = { mode = "auto" },
-					},
+			})
+
+			vim.lsp.config("eslint", {
+				settings = {
+					workingDirectory = { mode = "auto" },
 				},
-				pyright = {},
-				emmet_ls = {
-					filetypes = {
-						"html",
-						"typescriptreact",
-						"javascriptreact",
-						"css",
-						"sass",
-						"scss",
-						"less",
-						"svelte",
-					},
-				},
-				vtsls = {
-					settings = {
-						typescript = {
-							preferences = {
-								importModuleSpecifier = "relative",
-								includePackageJsonAutoImports = "on",
-							},
-							suggest = {
-								completeFunctionCalls = true,
-							},
-						},
-						javascript = {
-							preferences = {
-								importModuleSpecifier = "relative",
-								includePackageJsonAutoImports = "on",
-							},
-							suggest = {
-								completeFunctionCalls = true,
-							},
-						},
-					},
-				},
-				svelte = {},
-				somesass_ls = {},
-				tailwindcss = {
-					filetypes = {
-						"html",
-						"typescriptreact",
-						"javascriptreact",
-						"css",
-						"sass",
-						"scss",
-						"svelte",
-					},
-					settings = {
-						tailwindCSS = {
-							experimental = {
-								classRegex = {
-									{ "clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-									{ "cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-									{ "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+			})
+
+			vim.lsp.config("emmet_ls", {
+				filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
+			})
+
+			-- typescript-svelte-plugin is bundled with svelte-language-server (installed via Mason).
+			-- Adding it as a vtsls global plugin gives TypeScript awareness of .svelte imports
+			-- in .ts/.js files (e.g. +page.ts, +layout.ts in SvelteKit projects).
+			local svelte_plugin_path = vim.fn.stdpath("data")
+				.. "/mason/packages/svelte-language-server/node_modules/typescript-svelte-plugin"
+
+			vim.lsp.config("vtsls", {
+				settings = {
+					vtsls = {
+						tsserver = {
+							globalPlugins = {
+								{
+									name = "typescript-svelte-plugin",
+									location = svelte_plugin_path,
+									enableForWorkspaceTypeScriptVersions = true,
 								},
 							},
 						},
 					},
-				},
-			}
-
-			local ensure_installed = vim.tbl_keys(servers or {})
-			vim.list_extend(ensure_installed, {
-				"stylua",
-				"eslint_d",
-				"prettierd",
-				"isort",
-				"black",
-				"gopls",
-				"tailwindcss-language-server",
-			})
-			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
-
-			require("mason-lspconfig").setup({
-				ensure_installed = {},
-				automatic_installation = false,
-				handlers = {
-					function(server_name)
-						local server = servers[server_name] or {}
-						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-						require("lspconfig")[server_name].setup(server)
-					end,
+					typescript = {
+						preferences = {
+							importModuleSpecifier = "relative",
+							includePackageJsonAutoImports = "on",
+						},
+						suggest = { completeFunctionCalls = true },
+					},
+					javascript = {
+						preferences = {
+							importModuleSpecifier = "relative",
+							includePackageJsonAutoImports = "on",
+						},
+						suggest = { completeFunctionCalls = true },
+					},
 				},
 			})
+
+			-- The default lsp/svelte.lua already provides on_attach with
+			-- TS/JS file change notification and :LspMigrateToSvelte5 command.
+			-- We only need to add defaultScriptLanguage.
+			vim.lsp.config("svelte", {
+				settings = {
+					svelte = {
+						plugin = {
+							svelte = { defaultScriptLanguage = "ts" },
+						},
+					},
+				},
+			})
+
+			-- Disable cssls validation — Tailwind LSP handles CSS validation in
+			-- Tailwind projects and understands @plugin, @theme, etc. natively.
+			-- cssls still provides CSS property completions and hover docs.
+			vim.lsp.config("cssls", {
+				settings = {
+					css = { validate = false },
+					less = { validate = false },
+					scss = { validate = false },
+				},
+			})
+
+			vim.lsp.config("somesass_ls", {
+				settings = {
+					css = { lint = { unknownAtRules = "ignore" } },
+					scss = { lint = { unknownAtRules = "ignore" } },
+				},
+			})
+
+			-- The default lsp/tailwindcss.lua already includes svelte in filetypes
+			-- and sets editor.tabSize in before_init. We replace before_init to
+			-- add Tailwind v4 auto-detection while preserving the tabSize logic.
+			vim.lsp.config("tailwindcss", {
+				settings = {
+					tailwindCSS = {
+						experimental = {
+							classRegex = {
+								{ "clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+								{ "cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+								{ "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+							},
+						},
+					},
+				},
+				before_init = function(_, config)
+					-- Preserve default: set editor.tabSize
+					config.settings = vim.tbl_deep_extend("keep", config.settings, {
+						editor = { tabSize = vim.lsp.util.get_effective_tabstop() },
+					})
+
+					-- Auto-detect Tailwind v4 CSS entry point (@import 'tailwindcss')
+					-- Tailwind v4 has no tailwind.config.js; the LSP needs experimental.configFile
+					-- pointing to the CSS file that imports tailwindcss.
+					local root_dir = config.root_dir
+					if not root_dir then
+						return
+					end
+					-- Don't override if explicitly set (e.g. via project-local .nvim.lua)
+					local tw = config.settings and config.settings.tailwindCSS
+					if tw and tw.experimental and tw.experimental.configFile then
+						return
+					end
+					local css_files = vim.fs.find(function(name, path)
+						return name:match("%.css$") and not path:find("node_modules", 1, true)
+					end, { path = root_dir, type = "file", limit = 20 })
+					for _, file_path in ipairs(css_files) do
+						local ok, lines = pcall(vim.fn.readfile, file_path, "", 10)
+						if ok then
+							for _, line in ipairs(lines) do
+								if line:find("@import%s+['\"]tailwindcss['\"]") then
+									config.settings = config.settings or {}
+									config.settings.tailwindCSS = config.settings.tailwindCSS or {}
+									config.settings.tailwindCSS.experimental = config.settings.tailwindCSS.experimental
+										or {}
+									config.settings.tailwindCSS.experimental.configFile = file_path
+									return
+								end
+							end
+						end
+					end
+				end,
+			})
+
+			-----------------------------------------------------------------
+			-- Mason: install servers and tools
+			-----------------------------------------------------------------
+			require("mason-tool-installer").setup({
+				ensure_installed = {
+					-- LSP servers
+					"clangd",
+					"lua_ls",
+					"marksman",
+					"eslint",
+					"pyright",
+					"emmet_ls",
+					"vtsls",
+					"svelte",
+					"cssls",
+					"somesass_ls",
+					"tailwindcss",
+					-- Formatters & tools
+					"stylua",
+					"prettierd",
+					"isort",
+					"black",
+					"gopls",
+				},
+			})
+
+			-- mason-lspconfig: automatic_enable (default) calls vim.lsp.enable()
+			-- for all Mason-installed servers, using the configs from
+			-- vim.lsp.config() above merged with nvim-lspconfig's lsp/*.lua defaults.
+			require("mason-lspconfig").setup()
 
 			-- GDScript LSP (Godot), not managed by Mason
 			vim.lsp.enable("gdscript")

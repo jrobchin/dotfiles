@@ -35,12 +35,6 @@ return {
 		opts = {},
 	},
 	{
-		"tronikelis/ts-autotag.nvim",
-		opts = {},
-		-- ft = {}, optionally you can load it only in jsx/html
-		event = "VeryLazy",
-	},
-	{
 		"nvim-treesitter/nvim-treesitter-context",
 		opts = { enable = true },
 	},

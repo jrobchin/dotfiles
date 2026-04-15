@@ -3,12 +3,91 @@
     "prefix": "script",
     "body": ["<script lang=\"ts\">", "\t$0", "</script>"]
   },
+  "script module": {
+    "prefix": "smod",
+    "body": ["<script module lang=\"ts\">", "\t$0", "</script>"]
+  },
   "style": {
     "prefix": "style",
+    "body": ["<style>", "\t$0", "</style>"]
+  },
+  "style scss": {
+    "prefix": "stylescss",
     "body": ["<style lang=\"scss\">", "\t$0", "</style>"]
   },
   "children": {
     "prefix": "children",
     "body": ["let { children }: { children: Snippet } = \\$props();"]
+  },
+  "props": {
+    "prefix": "props",
+    "body": ["let { $1 }: { $2 } = \\$props();"]
+  },
+  "state": {
+    "prefix": "state",
+    "body": ["let $1 = \\$state($2);"]
+  },
+  "derived": {
+    "prefix": "derived",
+    "body": ["let $1 = \\$derived($2);"]
+  },
+  "derived by": {
+    "prefix": "derivedby",
+    "body": ["let $1 = \\$derived.by(() => {", "\t$0", "});"]
+  },
+  "effect": {
+    "prefix": "effect",
+    "body": ["\\$effect(() => {", "\t$0", "});"]
+  },
+  "effect pre": {
+    "prefix": "effectpre",
+    "body": ["\\$effect.pre(() => {", "\t$0", "});"]
+  },
+  "bindable": {
+    "prefix": "bindable",
+    "body": ["let { $1 = \\$bindable($2) } = \\$props();"]
+  },
+  "page load": {
+    "prefix": "load",
+    "body": [
+      "import type { PageLoad } from './$types';",
+      "",
+      "export const load: PageLoad = async ({ $1 }) => {",
+      "\t$0",
+      "\treturn {};",
+      "};"
+    ]
+  },
+  "server load": {
+    "prefix": "sload",
+    "body": [
+      "import type { PageServerLoad } from './$types';",
+      "",
+      "export const load: PageServerLoad = async ({ $1 }) => {",
+      "\t$0",
+      "\treturn {};",
+      "};"
+    ]
+  },
+  "form actions": {
+    "prefix": "actions",
+    "body": [
+      "import type { Actions } from './$types';",
+      "",
+      "export const actions: Actions = {",
+      "\tdefault: async ({ request }) => {",
+      "\t\tconst data = await request.formData();",
+      "\t\t$0",
+      "\t},",
+      "};"
+    ]
+  },
+  "page data": {
+    "prefix": "pagedata",
+    "body": [
+      "import type { PageData } from './$types';",
+      "",
+      "let { data }: { data: PageData } = \\$props();"
+    ]
   }
 }

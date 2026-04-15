@@ -56,7 +56,15 @@ return {
 
 			-- (Default) Only show the documentation popup when manually triggered
 			completion = {
-				documentation = { auto_show = true, auto_show_delay_ms = 0 },
+				documentation = {
+					auto_show = true,
+					auto_show_delay_ms = 0,
+					treesitter_highlighting = true,
+					window = {
+						max_width = 80,
+						max_height = 24,
+					},
+				},
 				ghost_text = { enabled = true },
 			},
 			-- signature = {
